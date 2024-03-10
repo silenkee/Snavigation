@@ -26,18 +26,23 @@ app.mount("#app");
 // api获取，写入本地配置
 const config = setStore();
 const site = siteStore();
-const data = await onlineConfig(null);
+const data = await onlineConfig(config.configKey);
+// 存在config配置，则需要监控配置修改
 if (data.hasOwnProperty('config')) {
-    config.recoverSiteData(data.config)
+    if (data.config) {
+        // config配置不为空，则需要更新本地配置
+        config.recoverSiteData(data.config);
+    }
     config.$subscribe(({ newData }) => {
-        console.log(config);
-        onlineConfig({ 'config': config.$state });
+        onlineConfig(config.configKey, { 'config': JSON.stringify(config.$state) });
     });
 }
+// 同上
 if (data.hasOwnProperty('site')) {
-    site.setShortcutData(data.site);
+    if (data.site) {
+        site.setShortcutData(data.site);
+    }
     site.$subscribe(({ newData }) => {
-        console.log(site);
-        onlineConfig({ 'site': site.shortcutData });
+        onlineConfig(config.configKey, { 'site': JSON.stringify(site.shortcutData) });
     });
 }

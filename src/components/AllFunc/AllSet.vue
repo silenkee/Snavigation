@@ -407,7 +407,10 @@ const setCustomCover = () => {
 const setConfigKey = () => {
   if(inputConfigKey.value.length > 5){
     configKey.value = inputConfigKey.value;
-    $message.success("已成功设置远程配置密钥");
+    $message.success("已成功设置远程配置密钥，即将刷新生效");
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
   }else{
     $message.error("密钥长度一般不小于5位");
   }
