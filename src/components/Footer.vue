@@ -9,7 +9,7 @@
       <span v-if="icp" class="icp" @click="jumpTo('https://beian.miit.gov.cn')">
         {{ icp }}
       </span>
-      <span class="about" @click="aboutSiteModal = true">关于</span>
+      <span class="about" @click="aboutSiteModal = true">About</span>
     </div>
     <!-- 关于 -->
     <n-modal
@@ -20,7 +20,7 @@
     >
       <div class="about-modal">
         <div class="about">
-          <span class="name">{{ siteName }}</span>
+          <span class="name">{{ siteTitle }}</span>
           <span class="version">v {{ packageJson.version }}</span>
         </div>
         <div class="desc">
@@ -45,7 +45,8 @@ const set = setStore();
 
 // 站点数据
 const icp = import.meta.env.VITE_ICP;
-const siteName = import.meta.env.VITE_SITE_TITLE;
+const siteName = import.meta.env.VITE_SITE_NAME;
+const siteTitle = import.meta.env.VITE_SITE_TITLE;
 const siteAnthor = import.meta.env.VITE_SITE_ANTHOR;
 const copyrightLink = import.meta.env.VITE_SITE_COPYRIGHTLINK;
 const fullYear = new Date().getFullYear();

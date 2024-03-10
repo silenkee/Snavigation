@@ -3,6 +3,8 @@ import { defineStore } from "pinia";
 const useSetDataStore = defineStore("setData", {
   state: () => {
     return {
+      // 远程配置的密钥
+      configKey: "",
       // 主题类别
       themeType: "light",
       // 壁纸类别

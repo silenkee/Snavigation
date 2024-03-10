@@ -43,6 +43,7 @@
       <span class="weekday">{{ timeData.weekday ?? "星期八" }}</span>
     </div>
     <div v-if="set.showWeather" class="weather">
+      <span class="city">{{ weatherData?.city ?? "N/A" }}</span>
       <span class="status">{{ weatherData?.condition ?? "N/A" }}</span>
       <span class="temperature">{{ weatherData?.temp ?? "N/A" }} ℃</span>
       <span class="wind">{{ weatherData?.windDir ?? "N/A" }}</span>
@@ -100,6 +101,7 @@ const getWeatherData = async () => {
     }
     const data = weatherResult.lives[0];
     weatherData.value = {
+      city: data.city,
       condition: data.weather,
       temp: data.temperature,
       windDir: data.winddirection + "风",
@@ -209,6 +211,9 @@ onBeforeUnmount(() => {
     opacity: 0.7;
     font-size: 1rem;
     text-shadow: var(--main-text-shadow);
+    .status{
+      margin-left: 6px;
+    }
     .temperature {
       margin: 0 6px;
     }

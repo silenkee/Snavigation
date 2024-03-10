@@ -185,6 +185,23 @@
       </n-tab-pane>
       <n-tab-pane name="other" tab="其他设置">
         <n-scrollbar class="scrollbar">
+          <n-h6 prefix="bar"> 配置方式 </n-h6>
+          <n-card class="set-item">
+            <div class="desc">
+              <div class="name">
+                <span class="title">远程配置密钥</span>
+                <span class="tip"> 若填写密钥，将自动启用远程配置功能，否则为本地配置 </span>
+              </div>
+              <n-space>
+                <n-button strong secondary @click="configKeyModal = true">
+                  <template v-if="configKey" #icon>
+                    <SvgIcon iconName="icon-confirm" />
+                  </template>
+                  {{ configKey ? "已开启远程配置" : "输入密钥" }}
+                </n-button>
+              </n-space>
+            </div>
+          </n-card>
           <n-h6 prefix="bar"> 重置 </n-h6>
           <n-card class="set-item">
             <div class="name">
@@ -238,6 +255,25 @@
         </n-space>
       </template>
     </n-modal>
+    <!-- 设置远程配置密钥 -->
+    <n-modal preset="card" title="远程配置密钥" v-model:show="configKeyModal" :bordered="false">
+      <n-form>
+        <n-form-item label="请输入远程配置密钥，输入后会覆盖原配置">
+          <n-input
+            clearable
+            type="text"
+            v-model:value="inputConfigKey"
+            placeholder="********"
+          />
+        </n-form-item>
+      </n-form>
+      <template #footer>
+        <n-space justify="end">
+          <n-button strong secondary @click="configKeyModal = false"> 取消 </n-button>
+          <n-button strong secondary @click="setConfigKey"> 确认 </n-button>
+        </n-space>
+      </template>
+    </n-modal>
   </div>
 </template>
 
@@ -268,6 +304,7 @@ import identifyInput from "@/utils/identifyInput";
 const set = setStore();
 const status = statusStore();
 const {
+  configKey,
   themeType,
   backgroundType,
   backgroundCustom,
@@ -287,6 +324,8 @@ const {
 } = storeToRefs(set);
 const recoverRef = ref(null);
 const customCoverModal = ref(false);
+const inputConfigKey = ref("");
+const configKeyModal = ref(false);
 const customCoverUrl = ref("");
 
 // 壁纸类别
@@ -358,9 +397,19 @@ const setCustomCover = () => {
     backgroundType.value = 4;
     backgroundCustom.value = customCoverUrl.value;
     customCoverModal.value = false;
-    $message.error("已切换为自定义壁纸，刷新后生效");
+    $message.success("已切换为自定义壁纸，刷新后生效");
   } else {
     $message.error("请输入正确的网址");
+  }
+};
+
+// 设置远程配置密钥
+const setConfigKey = () => {
+  if(inputConfigKey.value.length > 5){
+    configKey.value = inputConfigKey.value;
+    $message.success("已成功设置远程配置密钥");
+  }else{
+    $message.error("密钥长度一般不小于5位");
   }
 };
 

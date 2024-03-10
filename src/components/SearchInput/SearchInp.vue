@@ -37,7 +37,7 @@
         ref="searchInputRef"
         type="text"
         label="search"
-        title="请输入搜索内容"
+        title="Please input search text"
         autocomplete="false"
         :placeholder="inputTip"
         v-model="status.searchInputValue"
@@ -45,7 +45,7 @@
         @click.stop="status.setEngineChangeStatus(false)"
         @keydown.stop="pressKeyboard"
       />
-      <div class="go" title="搜索" @click="toSearch(status.searchInputValue)">
+      <div class="go" title="Search" @click="toSearch(status.searchInputValue)">
         <SvgIcon iconName="icon-search" className="search" />
       </div>
     </div>
@@ -140,7 +140,7 @@ const toSearch = (val, type = 1) => {
     closeSearchInput(true);
   } else {
     if (status.siteStatus === "focus") {
-      $message.info("请输入搜索内容", { duration: 1500 });
+      $message.info("Please input someting", { duration: 1500 });
     }
     status.setSiteStatus("focus");
     searchInputRef.value?.focus();

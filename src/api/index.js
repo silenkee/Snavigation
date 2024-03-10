@@ -45,3 +45,17 @@ export const getSearchSuggestions = async (keyWord) => {
     return null;
   }
 };
+
+/**
+ * 获取/设置 远程配置
+ * @param {String} key 
+ * @param {Object} data 
+ * @returns 
+ */
+export const onlineConfig = async (key, data) => {
+  return axios({
+    method: "POST",
+    url: import.meta.env.VITE_CONFIG_URL,
+    params: { key, data },
+  });
+};
