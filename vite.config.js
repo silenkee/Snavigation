@@ -65,6 +65,7 @@ export default defineConfig({
   },
   build: {
     minify: "terser",
+    target: "esnext",
     terserOptions: {
       compress: {
         // 生产环境时移除 console
